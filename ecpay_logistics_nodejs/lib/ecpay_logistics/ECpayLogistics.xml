@@ -1,0 +1,749 @@
+<?xml  version="1.0" encoding="utf-8"?>
+<ECpayLogistics>
+  <Create>
+    <ServiceAddress>
+        <url type="Production">https://logistics.ecpay.com.tw/Express/Create</url>
+        <url type="Test">https://logistics-stage.ecpay.com.tw/Express/Create</url>
+    </ServiceAddress>
+    <Config>
+        <switchparam>
+          <n>LogisticsType</n>
+        </switchparam>
+        <optparam>
+        </optparam>
+    </Config>
+    <Parameters>
+      <param  type="String"  require="1" name="MerchantID">
+        <pattern>^\d{7,10}$</pattern>
+      </param>
+      <param type="String"  require="1" name="MerchantTradeNo">
+        <pattern>^.{0,20}$</pattern>
+      </param>
+      <param type="String"  require="1" name="MerchantTradeDate">
+        <pattern>^\d{4}\/\d{2}\/\d{2} \d{2}:\d{2}:\d{2}$</pattern>
+      </param>
+      <param type="Opt"  require="1" name="LogisticsSubType">
+        <!--B2C-->
+        <option>FAMI</option>
+        <option>UNIMART</option>
+        <option>HILIFE</option>
+        <!--C2C-->
+        <option>FAMIC2C</option>
+        <option>UNIMARTC2C</option>
+        <option>HILIFEC2C</option>
+        <!--HOME-->
+        <option>TCAT</option>
+        <option>ECAN</option>
+      </param>
+      <param type="Int"  require="1" name="GoodsAmount">
+        <mode>BETWEEN</mode> <!--BETWEEN, GE, LE, EXCLUDE  -->
+        <maximum>20000</maximum>
+        <minimal>1</minimal>
+      </param>
+      <param type="String"  require="1" name="CollectionAmount">  <!-- Patten of this column is defined in verification.rb??? -->
+      </param>
+      <param type="Opt"  require="1" name="IsCollection">
+        <option>N</option>
+        <option>Y</option>
+        <option></option>
+      </param>
+      <param type="String"  require="1" name="GoodsName">
+        <pattern>^.{0,50}$</pattern>
+      </param>
+      <param type="String"  require="1" name="SenderName">
+        <pattern>^([\u4e00-\u9fa5]{1,5}|[a-zA-Z]{1,10})$</pattern>
+      </param>
+      <param type="String"  require="1" name="SenderPhone">
+        <pattern>^([\d\(\)\#\-]{0,20}|)$</pattern>
+      </param>
+      <param type="String"  require="1" name="SenderCellPhone">
+        <pattern>^([0]{1}[9]{1}\d{2,8}|)$</pattern>
+      </param>
+      <param type="String"  require="1" name="ReceiverName">
+        <pattern>^([\u4e00-\u9fa5]{1,5}|[a-zA-Z]{1,10})$</pattern>
+      </param>
+      <param type="String"  require="1" name="ReceiverPhone">
+        <pattern>^([\d\(\)\#\-]{0,20}|)$</pattern>
+      </param>
+      <param type="String"  require="1" name="ReceiverCellPhone">
+        <pattern>^([0]{1}[9]{1}\d{2,8}|)$</pattern>
+      </param>
+      <param type="String"  require="1" name="ReceiverEmail">
+        <pattern>^.{0,100}$</pattern>
+      </param>
+      <param type="String"  require="1" name="TradeDesc">
+        <pattern>^.{0,200}$</pattern>
+      </param>
+      <param type="String"  require="1" name="ServerReplyURL">
+        <pattern>^.{1,200}$</pattern>
+      </param>
+      <param type="String"  require="1" name="ClientReplyURL">
+        <pattern>^.{0,200}$</pattern>
+      </param>
+      <param type="String" require="1" name="LogisticsC2CReplyURL">
+        <pattern>^.{0,200}$</pattern>
+      </param>
+      <param type="String" require="1" name="Remark">
+        <pattern>^.{0,200}$</pattern>
+      </param>
+      <param type="String" require="1" name="PlatformID">
+        <pattern>^(\d{7,10}|)$</pattern>
+      </param>
+      <param type="String"  require="1" name="LogisticsType">
+        <option>CVS</option>
+        <condparam owner="CVS">
+          <param type="String" require="1" name="ReceiverStoreID">
+            <pattern>^[a-zA-Z0-9]{1,6}$</pattern>
+          </param>
+          <param type="String" require="1" name="ReturnStoreID">
+            <pattern>^[a-zA-Z0-9]{0,6}$</pattern>
+          </param>
+        </condparam>
+        <option>Home</option>
+        <condparam owner="Home">
+          <param type="String" require="1" name="SenderZipCode">
+            <pattern>^\d{3,5}$</pattern>
+          </param>
+          <param type="String" require="1" name="SenderAddress">
+            <pattern>^.{6,60}$</pattern>
+          </param>
+          <param type="String" require="1" name="ReceiverZipCode">
+            <pattern>^\d{3,5}$</pattern>
+          </param>
+          <param type="String" require="1" name="ReceiverAddress">
+            <pattern>^.{6,60}$</pattern>
+          </param>
+          <param type="Opt" require="1" name="Temperature">
+            <option>0001</option>
+            <option>0002</option>
+            <option>0003</option>
+          </param>
+          <param type="Opt" require="1" name="Distance">
+            <option>00</option>
+            <option>01</option>
+            <option>02</option>
+          </param>
+          <param type="Opt" require="1" name="Specification">
+            <option>0001</option>
+            <option>0002</option>
+            <option>0003</option>
+            <option>0004</option>
+          </param>
+          <param type="Opt" require="1" name="ScheduledPickupTime">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option></option>
+          </param>
+          <param type="Opt" require="1" name="ScheduledDeliveryTime">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>12</option>
+            <option>13</option>
+            <option>23</option>
+            <option></option>
+          </param>
+          <param type="String" require="1" name="ScheduledDeliveryDate">
+            <pattern>^(\d{4}\/\d{2}\/\d{2}|)$</pattern>
+          </param>
+          <param type="String" require="1" name="PackageCount">  <!-- Patten of this column is defined in verification.rb??? -->
+          </param>
+        </condparam>
+      </param>
+    </Parameters>
+  </Create>
+  <Map>
+    <ServiceAddress>
+      <url type="Production">https://logistics.ecpay.com.tw/Express/map</url>
+      <url type="Test">https://logistics-stage.ecpay.com.tw/Express/map</url>
+    </ServiceAddress>
+    <Config>
+      <switchparam>
+      </switchparam>
+      <optparam>
+      </optparam>
+    </Config>
+    <Parameters>
+      <param  type="String"  require="1" name="MerchantID">
+        <pattern>^\d{7,10}$</pattern>
+      </param>
+      <param type="String"  require="1" name="MerchantTradeNo">
+        <pattern>^.{0,20}$</pattern>
+      </param>
+      <param type="Opt"  require="1" name="LogisticsType">
+        <option>CVS</option>
+      </param>
+      <param type="Opt"  require="1" name="LogisticsSubType">
+        <!--B2C-->
+        <option>FAMI</option>
+        <option>UNIMART</option>
+        <option>HILIFE</option>
+        <!--C2C-->
+        <option>FAMIC2C</option>
+        <option>UNIMARTC2C</option>
+        <option>HILIFEC2C</option>
+      </param>
+      <param type="Opt"  require="1" name="IsCollection">
+        <option>N</option>
+        <option>Y</option>
+      </param>
+      <param type="String"  require="1" name="ServerReplyURL">
+        <pattern>^.{1,200}$</pattern>
+      </param>
+      <param type="String"  require="0" name="ExtraData">
+        <pattern>^.{0,20}$</pattern>
+      </param>
+      <param type="Opt"  require="0" name="Device">
+        <option>0</option>
+        <option>1</option>
+        <option></option>
+      </param>
+    </Parameters>
+  </Map>
+  <QueryLogisticsTradeInfo>
+    <ServiceAddress>
+      <url type="Production">https://logistics.ecpay.com.tw/Helper/QueryLogisticsTradeInfo/V2</url>
+      <url type="Test">https://logistics-stage.ecpay.com.tw/Helper/QueryLogisticsTradeInfo/V2</url>
+    </ServiceAddress>
+    <Config>
+      <switchparam>
+      </switchparam>
+      <optparam>
+      </optparam>
+    </Config>
+    <Parameters>
+      <param  type="String" require="1" name="TimeStamp">
+        <pattern>^\d{10}$</pattern>
+      </param>
+      <param  type="String" require="1" name="MerchantID">
+        <pattern>^\d{7,10}$</pattern>
+      </param>
+      <param type="String" require="1" name="AllPayLogisticsID">
+        <pattern>^.{1,20}$</pattern>
+      </param>
+      <param type="String" require="0" name="PlatformID">
+        <pattern>^\d{0,10}$</pattern>
+      </param>
+    </Parameters>
+  </QueryLogisticsTradeInfo>
+  <LogisticsCheckAccounts>
+    <ServiceAddress>
+      <url type="Production">https://logistics.ecpay.com.tw/Helper/LogisticsCheckAccoounts</url>
+      <url type="Test">https://logistics-stage.ecpay.com.tw/Helper/LogisticsCheckAccoounts</url>
+    </ServiceAddress>
+    <Config>
+      <switchparam>
+      </switchparam>
+      <optparam>
+      </optparam>
+    </Config>
+    <Parameters>
+      <param  type="String" require="1" name="MerchantID">
+        <pattern>^\d{7,10}$</pattern>
+      </param>
+      <param type="String" require="1" name="RtnMerchantTradeNo">
+        <pattern>^\d{1,13}$</pattern>
+      </param>
+      <param type="String" require="0" name="PlatformID">
+        <pattern>^\d{0,10}$</pattern>
+      </param>
+    </Parameters>
+  </LogisticsCheckAccounts>
+  <UpdateShipmentInfo>
+    <ServiceAddress>
+      <url type="Production">https://logistics.ecpay.com.tw/Helper/UpdateShipmentInfo</url>
+      <url type="Test">https://logistics-stage.ecpay.com.tw/Helper/UpdateShipmentInfo</url>
+    </ServiceAddress>
+    <Config>
+      <switchparam>
+      </switchparam>
+      <optparam>
+      </optparam>
+    </Config>
+    <Parameters>
+      <param  type="String" require="1" name="MerchantID">
+        <pattern>^\d{7,10}$</pattern>
+      </param>
+      <param type="String" require="1" name="AllPayLogisticsID">
+        <pattern>^.{1,20}$</pattern>
+      </param>
+      <param type="String" require="1" name="ShipmentDate">
+        <pattern>^(\d{4}\/\d{2}\/\d{2}|)$</pattern>
+      </param>
+      <param type="String" require="1" name="ReceiverStoreID">
+        <pattern>^(\d{6}|)$</pattern>
+      </param>
+      <param type="String" require="0" name="PlatformID">
+        <pattern>^\d{0,10}$</pattern>
+      </param>
+    </Parameters>
+  </UpdateShipmentInfo>
+  <printTradeDocument>
+    <ServiceAddress>
+      <url type="Production">https://logistics.ecpay.com.tw/helper/printTradeDocument</url>
+      <url type="Test">https://logistics-stage.ecpay.com.tw/helper/printTradeDocument</url>
+    </ServiceAddress>
+    <Config>
+      <switchparam>
+      </switchparam>
+      <optparam>
+      </optparam>
+    </Config>
+    <Parameters>
+      <param  type="String" require="1" name="MerchantID">
+        <pattern>^\d{7,10}$</pattern>
+      </param>
+      <param type="String" require="1" name="AllPayLogisticsID">
+        <pattern>^.{1,20}$</pattern>
+      </param>
+      <param type="String" require="0" name="PlatformID">
+        <pattern>^\d{0,10}$</pattern>
+      </param>
+    </Parameters>
+  </printTradeDocument>
+  <CreateTestData>
+    <ServiceAddress>
+      <url type="Production">https://logistics.ecpay.com.tw/Express/CreateTestData</url>
+      <url type="Test">https://logistics-stage.ecpay.com.tw/Express/CreateTestData</url>
+    </ServiceAddress>
+    <Config>
+      <switchparam>
+      </switchparam>
+      <optparam>
+      </optparam>
+    </Config>
+    <Parameters>
+      <param  type="String"  require="1" name="MerchantID">
+        <pattern>^\d{7,10}$</pattern>
+      </param>
+      <param type="String"  require="0" name="ClientReplyURL">
+        <pattern>^.{0,200}$</pattern>
+      </param>
+      <param type="String"  require="0" name="PlatformID">
+        <pattern>^.{0,10}$</pattern>
+      </param>
+      <param type="Opt"  require="1" name="LogisticsSubType">
+        <option>FAMI</option>
+        <option>UNIMART</option>
+        <option>HILIFE</option>
+      </param>
+    </Parameters>
+  </CreateTestData>
+  <ReturnHome>
+    <ServiceAddress>
+      <url type="Production">https://logistics.ecpay.com.tw/Express/ReturnHome</url>
+      <url type="Test">https://logistics-stage.ecpay.com.tw/Express/ReturnHome</url>
+    </ServiceAddress>
+    <Config>
+      <switchparam>
+      </switchparam>
+      <optparam>
+      </optparam>
+    </Config>
+    <Parameters>
+      <param  type="String"  require="1" name="MerchantID">
+        <pattern>^\d{7,10}$</pattern>
+      </param>
+      <param type="String"  require="1" name="AllPayLogisticsID">
+        <pattern>^\d{0,20}$</pattern>
+      </param>
+      <param type="Opt"  require="1" name="LogisticsSubType">
+        <option>TCAT</option>
+        <option>ECAN</option>
+        <option></option>
+      </param>
+      <param type="String"  require="1" name="ServerReplyURL">
+        <pattern>^.{0,200}$</pattern>
+      </param>
+      <param type="String"  require="1" name="SenderName">
+        <pattern>^([\u4e00-\u9fa5]{1,5}|[a-zA-Z]{1,10}|)$</pattern>
+      </param>
+      <param type="String"  require="1" name="SenderPhone">
+        <pattern>^([\d\(\)\#\-]{0,20}|)$</pattern>
+      </param>
+      <param type="String"  require="1" name="SenderCellPhone">
+        <pattern>^([0]{1}[9]{1}\d{2,8}|)$</pattern>
+      </param>
+      <param type="String"  require="1" name="SenderZipCode">
+        <pattern>^.{0,5}$</pattern>
+      </param>
+      <param type="String"  require="1" name="SenderAddress">
+        <pattern>^.{0,200}$</pattern>
+      </param>
+      <param type="String"  require="1" name="ReceiverName">
+        <pattern>^([\u4e00-\u9fa5]{1,5}|[a-zA-Z]{1,10}|)$</pattern>
+      </param>
+      <param type="String"  require="1" name="ReceiverPhone">
+        <pattern>^([\d\(\)\#\-]{0,20}|)$</pattern>
+      </param>
+      <param type="String"  require="1" name="ReceiverCellPhone">
+        <pattern>^([0]{1}[9]{1}\d{2,8}|)$</pattern>
+      </param>
+      <param type="String"  require="1" name="ReceiverZipCode">
+        <pattern>^.{0,5}$</pattern>
+      </param>
+      <param type="String"  require="1" name="ReceiverAddress">
+        <pattern>^.{0,200}$</pattern>
+      </param>
+      <param type="Int"  require="1" name="GoodsAmount">
+        <mode>BETWEEN</mode> <!--BETWEEN, GE, LE, EXCLUDE  -->
+        <maximum>20000</maximum>
+        <minimal>1</minimal>
+      </param>
+      <param type="String"  require="1" name="GoodsName">
+        <pattern>^.{0,60}$</pattern>
+      </param>
+      <param type="Opt" require="1" name="Temperature">
+        <option>0001</option>
+        <option>0002</option>
+        <option>0003</option>
+      </param>
+      <param type="Opt" require="1" name="Distance">
+        <option>00</option>
+        <option>01</option>
+        <option>02</option>
+      </param>
+      <param type="Opt" require="1" name="Specification">
+        <option>0001</option>
+        <option>0002</option>
+        <option>0003</option>
+        <option>0004</option>
+      </param>
+      <param type="Opt" require="1" name="ScheduledPickupTime">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option></option>
+      </param>
+      <param type="Opt" require="1" name="ScheduledDeliveryTime">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+        <option>12</option>
+        <option>13</option>
+        <option>23</option>
+        <option></option>
+      </param>
+      <param type="String" require="1" name="ScheduledDeliveryDate">
+        <pattern>^(\d{4}\/\d{2}\/\d{2}|)$</pattern>
+      </param>
+      <param type="String" require="1" name="PackageCount">  <!-- Patten of this column is defined in verification.rb??? -->
+      </param>
+      <param type="String" require="1" name="Remark">
+        <pattern>^.{0,200}$</pattern>
+      </param>
+      <param type="String" require="1" name="PlatformID">
+        <pattern>^(\d{7,10}|)$</pattern>
+      </param>
+    </Parameters>
+  </ReturnHome>
+  <ReturnCVS>
+    <ServiceAddress>
+      <url type="Production">https://logistics.ecpay.com.tw/express/ReturnCVS</url>
+      <url type="Test">https://logistics-stage.ecpay.com.tw/express/ReturnCVS</url>
+    </ServiceAddress>
+    <Config>
+      <switchparam>
+      </switchparam>
+      <optparam>
+      </optparam>
+    </Config>
+    <Parameters>
+      <param  type="String"  require="1" name="MerchantID">
+        <pattern>^\d{7,10}$</pattern>
+      </param>
+      <param type="String"  require="1" name="AllPayLogisticsID">
+        <pattern>^\d{0,20}$</pattern>
+      </param>
+      <param type="String"  require="1" name="ServerReplyURL">
+        <pattern>^.{1,200}$</pattern>
+      </param>
+      <param type="String"  require="1" name="GoodsName">
+        <pattern>^.{0,50}$</pattern>
+      </param>
+      <param type="Int"  require="1" name="GoodsAmount">
+        <mode>BETWEEN</mode> <!--BETWEEN, GE, LE, EXCLUDE  -->
+        <maximum>20000</maximum>
+        <minimal>1</minimal>
+      </param>
+      <param type="String"  require="1" name="CollectionAmount">
+        <pattern>^([0]{1}|)$</pattern>
+      </param>
+      <param type="String"  require="1" name="ServiceType">
+        <pattern>^[4]{1}$</pattern>
+      </param>
+      <param type="String"  require="1" name="SenderName">
+        <pattern>^.{1,50}$</pattern>
+      </param>
+      <param type="String"  require="1" name="SenderPhone">
+        <pattern>^.{0,20}$</pattern>
+      </param>
+      <param type="String"  require="1" name="Remark">
+        <pattern>^.{0,20}$</pattern>
+      </param>
+      <param type="String"  require="1" name="Quantity">
+        <pattern>^.{0,50}$</pattern>
+      </param>
+      <param type="String"  require="1" name="Cost">
+        <pattern>^.{0,50}$</pattern>
+      </param>
+      <param type="String"  require="1" name="PlatformID">
+        <pattern>^\d{0,10}$</pattern>
+      </param>
+    </Parameters>
+  </ReturnCVS>
+  <ReturnHiLifeCVS>
+    <ServiceAddress>
+      <url type="Production">https://logistics.ecpay.com.tw/express/ReturnHiLifeCVS</url>
+      <url type="Test">https://logistics-stage.ecpay.com.tw/express/ReturnHiLifeCVS</url>
+    </ServiceAddress>
+    <Config>
+      <switchparam>
+      </switchparam>
+      <optparam>
+      </optparam>
+    </Config>
+    <Parameters>
+      <param  type="String"  require="1" name="MerchantID">
+        <pattern>^\d{7,10}$</pattern>
+      </param>
+      <param  type="String"  require="1" name="AllPayLogisticsID">
+        <pattern>^\d{0,20}$</pattern>
+      </param>
+      <param  type="String"  require="1" name="ServerReplyURL">
+        <pattern>^.{1,200}$</pattern>
+      </param>
+      <param  type="String"  require="1" name="GoodsName">
+        <pattern>^.{0,60}$</pattern>
+      </param>
+      <param  type="Int"  require="1" name="GoodsAmount">
+        <mode>BETWEEN</mode> <!--BETWEEN, GE, LE, EXCLUDE  -->
+        <maximum>20000</maximum>
+        <minimal>1</minimal>
+      </param>
+      <param  type="String"  require="1" name="CollectionAmount">
+        <pattern>^([0]{1}|)$</pattern>
+      </param>
+      <param  type="String"  require="1" name="ServiceType">
+        <pattern>^[4]{1}$</pattern>
+      </param>
+      <param  type="String"  require="1" name="SenderName">
+        <pattern>^.{1,50}$</pattern>
+      </param>
+      <param  type="String"  require="1" name="SenderPhone">
+        <pattern>^\d{1,20}$</pattern>
+      </param>
+      <param  type="String"  require="1" name="Remark">
+        <pattern>^.{0,20}$</pattern>
+      </param>
+      <param  type="String"  require="1" name="PlatformID">
+        <pattern>^\d{0,10}$</pattern>
+      </param>
+    </Parameters>
+  </ReturnHiLifeCVS>
+  <ReturnUniMartCVS>
+    <ServiceAddress>
+      <url type="Production">https://logistics.ecpay.com.tw/express/ReturnUniMartCVS</url>
+      <url type="Test">https://logistics-stage.ecpay.com.tw/express/ReturnUniMartCVS</url>
+    </ServiceAddress>
+    <Config>
+      <switchparam>
+      </switchparam>
+      <optparam>
+      </optparam>
+    </Config>
+    <Parameters>
+      <param  type="String"  require="1" name="MerchantID">
+        <pattern>^\d{7,10}$</pattern>
+      </param>
+      <param  type="String"  require="1" name="AllPayLogisticsID">
+        <pattern>^\d{0,20}$</pattern>
+      </param>
+      <param  type="String"  require="1" name="ServerReplyURL">
+        <pattern>^.{1,200}$</pattern>
+      </param>
+      <param  type="String"  require="1" name="GoodsName">
+        <pattern>^.{0,50}$</pattern>
+      </param>
+      <param  type="Int"  require="1" name="GoodsAmount">
+        <mode>BETWEEN</mode> <!--BETWEEN, GE, LE, EXCLUDE  -->
+        <maximum>19999</maximum>
+        <minimal>1</minimal>
+      </param>
+      <param  type="String"  require="1" name="CollectionAmount">
+        <pattern>^([0]{1}|)$</pattern>
+      </param>
+      <param  type="String"  require="1" name="ServiceType">
+        <pattern>^[4]{1}$</pattern>
+      </param>
+      <param  type="String"  require="1" name="SenderName">
+        <pattern>^.{1,50}$</pattern>
+      </param>
+      <param  type="String"  require="1" name="SenderPhone">
+        <pattern>^.{0,20}$</pattern>
+      </param>
+      <param  type="String"  require="1" name="Remark">
+        <pattern>^.{0,20}$</pattern>
+      </param>
+      <param  type="String"  require="1" name="PlatformID">
+        <pattern>^\d{0,10}$</pattern>
+      </param>
+    </Parameters>
+  </ReturnUniMartCVS>
+  <UpdateStoreInfo>
+    <ServiceAddress>
+      <url type="Production">https://logistics.ecpay.com.tw/Express/UpdateStoreInfo</url>
+      <url type="Test">https://logistics-stage.ecpay.com.tw/Express/UpdateStoreInfo</url>
+    </ServiceAddress>
+    <Config>
+      <switchparam>
+      </switchparam>
+      <optparam>
+      </optparam>
+    </Config>
+    <Parameters>
+      <param  type="String"  require="1" name="MerchantID">
+        <pattern>^\d{7,10}$</pattern>
+      </param>
+      <param  type="String"  require="1" name="AllPayLogisticsID">
+        <pattern>^.{1,20}$</pattern>
+      </param>
+      <param  type="String"  require="1" name="CVSPaymentNo">
+        <pattern>^.{1,15}$</pattern>
+      </param>
+      <param  type="String"  require="1" name="CVSValidationNo">
+        <pattern>^.{1,10}$</pattern>
+      </param>
+      <param  type="Opt"  require="1" name="StoreType">
+        <option>01</option>
+        <option>02</option>
+      </param>
+      <param  type="String"  require="1" name="ReceiverStoreID">
+        <pattern>^\d{0,6}$</pattern>
+      </param>
+      <param  type="String"  require="1" name="ReturnStoreID">
+        <pattern>^\d{0,6}$</pattern>
+      </param>
+      <param  type="String"  require="1" name="PlatformID">
+        <pattern>^\d{0,10}$</pattern>
+      </param>
+    </Parameters>
+  </UpdateStoreInfo>
+  <CancelC2COrder>
+    <ServiceAddress>
+      <url type="Production">https://logistics.ecpay.com.tw/Express/CancelC2COrder</url>
+      <url type="Test">https://logistics-stage.ecpay.com.tw/Express/CancelC2COrder</url>
+    </ServiceAddress>
+    <Config>
+      <switchparam>
+      </switchparam>
+      <optparam>
+      </optparam>
+    </Config>
+    <Parameters>
+      <param  type="String"  require="1" name="MerchantID">
+        <pattern>^\d{7,10}$</pattern>
+      </param>
+      <param  type="String"  require="1" name="AllPayLogisticsID">
+        <pattern>^.{1,20}$</pattern>
+      </param>
+      <param  type="String"  require="1" name="CVSPaymentNo">
+        <pattern>^.{1,15}$</pattern>
+      </param>
+      <param  type="String"  require="1" name="CVSValidationNo">
+        <pattern>^.{1,10}$</pattern>
+      </param>
+      <param  type="String"  require="1" name="PlatformID">
+        <pattern>^\d{0,10}$</pattern>
+      </param>
+    </Parameters>
+  </CancelC2COrder>
+  <PrintUniMartC2COrderInfo>
+    <ServiceAddress>
+      <url type="Production">https://logistics.ecpay.com.tw/Express/PrintUniMartC2COrderInfo</url>
+      <url type="Test">https://logistics-stage.ecpay.com.tw/Express/PrintUniMartC2COrderInfo</url>
+    </ServiceAddress>
+    <Config>
+      <switchparam>
+      </switchparam>
+      <optparam>
+      </optparam>
+    </Config>
+    <Parameters>
+      <param  type="String"  require="1" name="MerchantID">
+        <pattern>^\d{7,10}$</pattern>
+      </param>
+      <param  type="String"  require="1" name="AllPayLogisticsID">
+        <pattern>^.{1,20}$</pattern>
+      </param>
+      <param  type="String"  require="1" name="CVSPaymentNo">
+        <pattern>^.{1,15}$</pattern>
+      </param>
+      <param  type="String"  require="1" name="CVSValidationNo">
+        <pattern>^.{1,10}$</pattern>
+      </param>
+      <param  type="String"  require="1" name="PlatformID">
+        <pattern>^\d{0,10}$</pattern>
+      </param>
+    </Parameters>
+  </PrintUniMartC2COrderInfo>
+  <PrintFAMIC2COrderInfo>
+    <ServiceAddress>
+      <url type="Production">https://logistics.ecpay.com.tw/Express/PrintFAMIC2COrderInfo</url>
+      <url type="Test">https://logistics-stage.ecpay.com.tw/Express/PrintFAMIC2COrderInfo</url>
+    </ServiceAddress>
+    <Config>
+      <switchparam>
+      </switchparam>
+      <optparam>
+      </optparam>
+    </Config>
+    <Parameters>
+      <param  type="String"  require="1" name="MerchantID">
+        <pattern>^\d{7,10}$</pattern>
+      </param>
+      <param  type="String"  require="1" name="AllPayLogisticsID">
+        <pattern>^.{1,20}$</pattern>
+      </param>
+      <param  type="String"  require="1" name="CVSPaymentNo">
+        <pattern>^.{1,15}$</pattern>
+      </param>
+      <param  type="String"  require="1" name="PlatformID">
+        <pattern>^\d{0,10}$</pattern>
+      </param>
+    </Parameters>
+  </PrintFAMIC2COrderInfo>
+  <PrintHILIFEC2COrderInfo>
+    <ServiceAddress>
+      <url type="Production">https://logistics.ecpay.com.tw/Express/PrintHILIFEC2COrderInfo</url>
+      <url type="Test">https://logistics-stage.ecpay.com.tw/Express/PrintHILIFEC2COrderInfo</url>
+    </ServiceAddress>
+    <Config>
+      <switchparam>
+      </switchparam>
+      <optparam>
+      </optparam>
+    </Config>
+    <Parameters>
+      <param  type="String"  require="1" name="MerchantID">
+        <pattern>^\d{7,10}$</pattern>
+      </param>
+      <param  type="String"  require="1" name="AllPayLogisticsID">
+        <pattern>^.{1,20}$</pattern>
+      </param>
+      <param  type="String"  require="1" name="CVSPaymentNo">
+        <pattern>^.{1,15}$</pattern>
+      </param>
+      <param  type="String"  require="1" name="PlatformID">
+        <pattern>^\d{0,10}$</pattern>
+      </param>
+    </Parameters>
+  </PrintHILIFEC2COrderInfo>
+</ECpayLogistics>
