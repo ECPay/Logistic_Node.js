@@ -359,7 +359,7 @@ class CreateParamVerify extends LogisticsVerifyBase{
               // [LogisticsType] is Home and [LogisticsSubType] is TCAT
               else if (params['LogisticsSubType'] === 'TCAT'){
                 // [LogisticsSubType] is TCAT, ScheduledDeliveryTime can not be '12:9~17', '13:9~12-17~20' and '23:13~20'
-                if (parseInt(params['ScheduledDeliveryTime']) > 5 && parseInt(params['ScheduledDeliveryTime']) <= 23){
+                if (parseInt(params['ScheduledDeliveryTime']) >= 5 && parseInt(params['ScheduledDeliveryTime']) <= 23){
                   throw new ECpayError.ECpayLogisticsRuleViolate(`[ScheduledDeliveryTime] can not be ${params['ScheduledDeliveryTime']} when [LogisticsSubType] is TCAT.`);
                 }
                 // [LogisticsSubType] is TCAT, PackageCount is unuse argument
@@ -419,9 +419,9 @@ class CreateParamVerify extends LogisticsVerifyBase{
               // [LogisticsSubType] is HILIFE, HILIFE Rules
               else if (params['LogisticsSubType'] === 'HILIFE'){
                 // [LogisticsSubType] is HILIFE, ReceiverPhone can not be empty
-                // if (params['ReceiverPhone'] === ''){
-                //   throw new ECpayError.ECpayLogisticsRuleViolate(`[ReceiverPhone] can not be empty when [LogisticsSubType] is HILIFE.`);
-                // }
+                if (params['ReceiverPhone'] === ''){
+                  throw new ECpayError.ECpayLogisticsRuleViolate(`[ReceiverPhone] can not be empty when [LogisticsSubType] is HILIFE.`);
+                }
                 // [LogisticsSubType] is HILIFE, ReceiverStoreID can not be empty
                 if (params['ReceiverStoreID'] === ''){
                   throw new ECpayError.ECpayLogisticsRuleViolate(`[ReceiverStoreID] can not be empty when [LogisticsSubType] is HILIFE.`);
@@ -438,10 +438,8 @@ class CreateParamVerify extends LogisticsVerifyBase{
                   throw new ECpayError.ECpayLogisticsRuleViolate(`[GoodsAmount] can not be ${params['GoodsAmount']} when [LogisticsSubType] is UNIMARTC2C.`);
                 }
                 // [LogisticsSubType] is UNIMARTC2C, GoodsAmount must be equal CollectionAmount
-                if (params['CollectionAmount'] !== ''){
-                  if (parseInt(params['GoodsAmount']) !== parseInt(params['CollectionAmount'])){
-                    throw new ECpayError.ECpayLogisticsRuleViolate(`[GoodsAmount] ${params['GoodsAmount']} can not be equal [CollectionAmount] ${params['CollectionAmount']} when [LogisticsSubType] is UNIMARTC2C.`);
-                  }
+                if (parseInt(params['GoodsAmount']) !== parseInt(params['CollectionAmount'])){
+                  throw new ECpayError.ECpayLogisticsRuleViolate(`[GoodsAmount] ${params['GoodsAmount']} can not be equal [CollectionAmount] ${params['CollectionAmount']} when [LogisticsSubType] is UNIMARTC2C.`);
                 }
                 // [LogisticsSubType] is UNIMARTC2C, SenderCellPhone can not be empty
                 if (params['SenderCellPhone'] === ''){
@@ -466,6 +464,10 @@ class CreateParamVerify extends LogisticsVerifyBase{
               } 
               // [LogisticsSubType] is FAMIC2C, FAMIC2C Rules
               else if (params['LogisticsSubType'] === 'FAMIC2C'){
+                // [LogisticsSubType]為FAMIC2C, ReceiverCellPhone can not be empty
+                if (params['ReceiverCellPhone'] === ''){
+                  throw new ECpayError.ECpayLogisticsRuleViolate(`[ReceiverCellPhone] can not be empty when [LogisticsSubType] is FAMIC2C`);
+                }
                 // [LogisticsSubType] is FAMIC2C, ReceiverStoreID can not be empty
                 if (params['ReceiverStoreID'] === ''){
                   throw new ECpayError.ECpayLogisticsRuleViolate(`[ReceiverStoreID] can not be empty when [LogisticsSubType] is FAMIC2C.`);
@@ -574,7 +576,7 @@ class ReturnParamVerify extends LogisticsVerifyBase{
             }
             // if [LogisticsSubType] isn't empty, it will checks info_params values can not be empty.
             let info_params = ['SenderName', 'SenderZipCode', 'SenderAddress', 'ReceiverName', 'ReceiverZipCode', 'ReceiverAddress'];
-            if (params['LogisitcsSubType'] === 'TCAT' || params['LogisticsSubType'] === 'ECAN'){
+            if (params['LogisitcsSubType'].includes('TCAT') || params['LogisticsSubType'].includes('ECAN')){
               info_params.forEach(function (param_name){
                 // check if there's empty value.
                 if (params[param_name] === ''){
@@ -663,25 +665,29 @@ class ReturnParamVerify extends LogisticsVerifyBase{
               throw new ECpayError.ECpayLogisticsRuleViolate(`[GoodsName] can not contains quotation marks.`);
             }
             let item_params = ['GoodsName', 'Quantity', 'Cost'];
-            if (params['GoodsName'].includes('#')){
-              let item_cnt = params['GoodsName'].split('#').length;
-              item_params.forEach(function (param_name) {
-                // Check if there's empty value.
-                if (params[param_name].match(new RegExp(/(\#\#|^\#|\#$)/)) !== null){
-                  throw new ECpayError.ECpayLogisticsRuleViolate(`[${param_name}] contains empty value.`);
-                }
-                let p_cnt = params[param_name].split('#').length;
-                if (item_cnt !== p_cnt){
-                  throw new ECpayError.ECpayLogisticsRuleViolate(`Count of item info [${param_name}] (${p_cnt}) not match count from [GoodsName] (${item_cnt}).`);
-                }
-              });
+            if (params['GoodsName'] === ''){
+                throw new ECpayError.ECpayLogisticsRuleViolate(`[GoodsName] is empty.`);
             } else {
-              // 沒有管線 => 逐一檢查後4項有無#號
-              item_params.forEach(function (param_name) {
-                if (params[param_name].includes('#')){
-                  throw new ECpayError.ECpayLogisticsRuleViolate(`Item info [${param_name}] contain pipeline delimiter but there's only one item in param [ItemName].`);
-                }
-              });
+              if (params['GoodsName'].includes('#')){
+                let item_cnt = params['GoodsName'].split('#').length;
+                item_params.forEach(function (param_name) {
+                  // Check if there's empty value.
+                  if (params[param_name].match(new RegExp(/(\#\#|^\#|\#$)/)) !== null){
+                    throw new ECpayError.ECpayLogisticsRuleViolate(`[${param_name}] contains empty value.`);
+                  }
+                  let p_cnt = params[param_name].split('#').length;
+                  if (item_cnt !== p_cnt){
+                    throw new ECpayError.ECpayLogisticsRuleViolate(`Count of item info [${param_name}] (${p_cnt}) not match count from [GoodsName] (${item_cnt}).`);
+                  }
+                });
+              } else {
+                // 沒有管線 => 逐一檢查後4項有無#號
+                item_params.forEach(function (param_name) {
+                  if (params[param_name].includes('#')){
+                    throw new ECpayError.ECpayLogisticsRuleViolate(`Item info [${param_name}] contain pipeline delimiter but there's only one item in param [ItemName].`);
+                  }
+                });
+              }
             }
             // Verify Value pattern of each param
             this.verify_param_by_pattern(params, this.all_param_pattern);
