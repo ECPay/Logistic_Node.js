@@ -37,7 +37,7 @@
       </param>
       <param type="Int"  require="1" name="GoodsAmount">
         <mode>BETWEEN</mode> <!--BETWEEN, GE, LE, EXCLUDE  -->
-        <maximum>20000</maximum>
+        <maximum>20001</maximum>
         <minimal>1</minimal>
       </param>
       <param type="String"  require="1" name="CollectionAmount">  <!-- Patten of this column is defined in verification.rb??? -->
@@ -574,7 +574,7 @@
       </param>
       <param  type="Int"  require="1" name="GoodsAmount">
         <mode>BETWEEN</mode> <!--BETWEEN, GE, LE, EXCLUDE  -->
-        <maximum>19999</maximum>
+        <maximum>20000</maximum>
         <minimal>1</minimal>
       </param>
       <param  type="String"  require="1" name="CollectionAmount">

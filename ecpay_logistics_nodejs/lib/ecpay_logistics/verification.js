@@ -384,10 +384,6 @@ class CreateParamVerify extends LogisticsVerifyBase{
               } 
               // [LogisticsSubType] is UNIMART, UNIMART Rules
               else if (params['LogisticsSubType'] === 'UNIMART'){
-                // [LogisticsSubType] is UNIMART, GoodsAmount must be between 1 and 19,999
-                if (parseInt(params['GoodsAmount']) > 19999 || parseInt(params['GoodsAmount']) < 1){
-                  throw new ECpayError.ECpayLogisticsRuleViolate(`[GoodsAmount] can not be ${params['GoodsAmount']} when [LogisticsSubType] is UNIMART.`);
-                }
                 // [LogisticsSubType] is UNIMART, ReceiverCellPhone can not be empty
                 if (params['ReceiverCellPhone'] === ''){
                   throw new ECpayError.ECpayLogisticsRuleViolate(`[ReceiverCellPhone] can not be empty when [LogisticsSubType] is UNIMART.`);
@@ -433,10 +429,6 @@ class CreateParamVerify extends LogisticsVerifyBase{
               } 
               // [LogisticsSubType] is UNIMARTC2C, UNIMARTC2C Rules
               else if (params['LogisticsSubType'] === 'UNIMARTC2C'){
-                // [LogisticsSubType] is UNIMARTC2C, GoodsAmount must be between 1 and 19,999
-                if (parseInt(params['GoodsAmount']) > 19999 || parseInt(params['GoodsAmount']) < 1){
-                  throw new ECpayError.ECpayLogisticsRuleViolate(`[GoodsAmount] can not be ${params['GoodsAmount']} when [LogisticsSubType] is UNIMARTC2C.`);
-                }
                 // [LogisticsSubType] is UNIMARTC2C, GoodsAmount must be equal CollectionAmount
                 if (parseInt(params['GoodsAmount']) !== parseInt(params['CollectionAmount'])){
                   throw new ECpayError.ECpayLogisticsRuleViolate(`[GoodsAmount] ${params['GoodsAmount']} can not be equal [CollectionAmount] ${params['CollectionAmount']} when [LogisticsSubType] is UNIMARTC2C.`);

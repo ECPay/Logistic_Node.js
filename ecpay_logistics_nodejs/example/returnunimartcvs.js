@@ -7,7 +7,7 @@ let base_param = {
 	AllPayLogisticsID:"", // 請帶數字, ex: f0a0d7e9fae1bb72bc93, 為create時所產生的
 	ServerReplyURL:"http://192.168.0.1/ReceiverServerReply", // 物流狀況會通知到此URL
 	GoodsName:"",
-	GoodsAmount:"100",
+	GoodsAmount:"200",
 	CollectionAmount:"",
 	ServiceType:"4",
 	SenderName:"綠界科技",
