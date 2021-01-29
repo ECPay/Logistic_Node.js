@@ -31,6 +31,7 @@
         <option>FAMIC2C</option>
         <option>UNIMARTC2C</option>
         <option>HILIFEC2C</option>
+        <option>OKMARTC2C</option>
         <!--HOME-->
         <option>TCAT</option>
         <option>ECAN</option>
@@ -186,6 +187,7 @@
         <option>FAMIC2C</option>
         <option>UNIMARTC2C</option>
         <option>HILIFEC2C</option>
+        <option>OKMARTC2C</option>
       </param>
       <param type="Opt"  require="1" name="IsCollection">
         <option>N</option>
@@ -618,7 +620,7 @@
       <param  type="String"  require="1" name="CVSPaymentNo">
         <pattern>^.{1,15}$</pattern>
       </param>
-      <param  type="String"  require="1" name="CVSValidationNo">
+      <param  type="String"  require="0" name="CVSValidationNo">
         <pattern>^.{1,10}$</pattern>
       </param>
       <param  type="Opt"  require="1" name="StoreType">
@@ -746,4 +748,30 @@
       </param>
     </Parameters>
   </PrintHILIFEC2COrderInfo>
+  <PrintOKMARTC2COrderInfo>
+    <ServiceAddress>
+      <url type="Production">https://logistics.ecpay.com.tw/Express/PrintOKMARTC2COrderInfo</url>
+      <url type="Test">https://logistics-stage.ecpay.com.tw/Express/PrintOKMARTC2COrderInfo</url>
+    </ServiceAddress>
+    <Config>
+      <switchparam>
+      </switchparam>
+      <optparam>
+      </optparam>
+    </Config>
+    <Parameters>
+      <param  type="String"  require="1" name="MerchantID">
+        <pattern>^\d{7,10}$</pattern>
+      </param>
+      <param  type="String"  require="1" name="AllPayLogisticsID">
+        <pattern>^.{1,20}$</pattern>
+      </param>
+      <param  type="String"  require="1" name="CVSPaymentNo">
+        <pattern>^.{1,15}$</pattern>
+      </param>
+      <param  type="String"  require="1" name="PlatformID">
+        <pattern>^\d{0,10}$</pattern>
+      </param>
+    </Parameters>
+  </PrintOKMARTC2COrderInfo>
 </ECpayLogistics>

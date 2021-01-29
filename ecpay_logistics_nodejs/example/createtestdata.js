@@ -4,7 +4,7 @@
 const ecpay_logistics = require('../lib/ecpay_logistics.js');
 // 參數值為[PLEASE MODIFY]者，請在每次測試時給予獨特值
 let base_param = {
-	LogisticsSubType:"FAMI",
+	LogisticsSubType:"OKMARTC2C",
 	ClientReplyURL:"",
 	PlatformID:""
 };
