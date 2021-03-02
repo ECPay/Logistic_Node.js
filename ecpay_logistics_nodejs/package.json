@@ -1,6 +1,6 @@
 {
   "name": "ecpay_logistics_nodejs",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "綠界物流串接用SDK",
   "main": "ecpay_logistics.js",
   "dependencies": {
@@ -17,6 +17,6 @@
     "node",
     "package"
   ],
-  "author": "ying.wu <ying.wu@opay.tw>",
+  "author": "ecpay <techsupport@ecpay.com.tw>",
   "license": "ISC"
 }
