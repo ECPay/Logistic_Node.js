@@ -1,7 +1,7 @@
 <?xml  version="1.0" encoding="utf-8"?>
 <Conf>
     <OperatingMode>Test</OperatingMode> <!--Test or Production-->
-    <MercProfile>Stage_Account_Logistics_B2C</MercProfile>
+    <MercProfile>Stage_Account_Logistics_C2C</MercProfile>
     <IsProjectContractor>N</IsProjectContractor>
 
     <MerchantInfo>

@@ -45,6 +45,11 @@ class ECpayC2CProcessClient{
         let res = this._c2c_process_pos_proc(parameters, 'PrintHILIFEC2COrderInfo');
         return res;
     }
+    printokmartc2corderinfo(parameters){
+        this._c2c_process_base_proc(parameters);
+        let res = this._c2c_process_pos_proc(parameters, 'PrintOKMARTC2COrderInfo');
+        return res;
+    }
 
     _get_curr_unix_time(){
         return this.helper.get_curr_unixtime();

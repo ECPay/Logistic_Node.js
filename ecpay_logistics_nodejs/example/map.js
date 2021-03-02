@@ -8,7 +8,7 @@ let base_param = {
 	MerchantTradeNo:"", // 請帶20碼uid, ex: f0a0d7e9fae1bb72bc93
 	ServerReplyURL:"http://192.168.0.1/ReceiverServerReply", // 物流狀況會通知到此URL
 	LogisticsType:"CVS",
-	LogisticsSubType:"FAMI",
+	LogisticsSubType:"OKMARTC2C",
 	IsCollection:"N",
 	ExtraData:"",
 	Device:""
